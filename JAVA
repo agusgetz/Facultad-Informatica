@@ -1,0 +1,166 @@
+package empresa;
+
+/**
+ *
+ * @author agus_
+ */
+public class Director {
+    private String nombreDirector;
+    private int ingresoAño;
+    private double sueldoBasico;  
+    private int DNIDirector;
+    private double montoViaticos;
+
+    public Director(String nombreDirector, int ingresoAño, double sueldoBasico, int DNIDirector, double montoViaticos) {
+        this.nombreDirector = nombreDirector;
+        this.ingresoAño = ingresoAño;
+        this.sueldoBasico = sueldoBasico;
+        this.DNIDirector = DNIDirector;
+        this.montoViaticos = montoViaticos;
+    }
+
+    public double getSueldoBasico() {
+        return sueldoBasico;
+    }
+
+    public void setSueldoBasico(double sueldoBasico) {
+        this.sueldoBasico = sueldoBasico;
+    }
+
+    public int getIngresoAño() {
+        return ingresoAño;
+    }
+
+    public double getMontoViaticos() {
+        return montoViaticos;
+    }
+
+    @Override
+    public String toString() {
+        String aux;
+        aux= '\n' + "/ nombre / "+ nombreDirector+ " / DNI / " + DNIDirector+ " / año ingreso / " + ingresoAño + " / sueldo basico/"+ sueldoBasico +  " / monto viaticos / "+ montoViaticos;
+        return aux;
+    }
+}
+
+
+public class Empresa {
+    private String nombreEmpresa;
+    private String direccion;
+    private Director directorEjecutivo;
+    private Encargado [] encargados;
+    private int dimf;
+    private int diml=0;
+
+    public Empresa(String nombreEmpresa, String direccion, Director directorEjecutivo, int unaDimF) {
+        this.nombreEmpresa = nombreEmpresa;
+        this.dimf= unaDimF;
+        this.direccion = direccion;
+        this.directorEjecutivo = directorEjecutivo;
+        this.encargados = new Encargado [this.dimf];
+        for (int i=0; i<this.dimf;i++)
+            this.encargados[i] = null;
+    }
+    
+ public void AgregarEncargado (Encargado E){
+     if (this.diml<this.dimf){
+         this.encargados[this.diml] = E;
+         this.diml++;}
+    }
+ 
+   public double SueldoDirector (){
+       double aux=this.directorEjecutivo.getSueldoBasico() ;
+      if ((2024 - this.directorEjecutivo.getIngresoAño()) >= 20 ){
+        this.directorEjecutivo.setSueldoBasico((aux+(aux*0.1)));
+        aux=this.directorEjecutivo.getSueldoBasico();}
+      aux+= this.directorEjecutivo.getMontoViaticos();
+      return aux;
+   };
+  
+    
+      public double [] SueldoEncargado (){
+       double aux=0;
+       double [] vector = new double [this.diml];
+       for (int i=0; i<this.diml;i++){
+           aux= this.encargados[i].getSueldoBasico();
+           if (2024-this.encargados[i].getIngresoAño()>= 20 ){
+             this.encargados[i].setSueldoBasico(aux+(aux*0.1));
+             aux= this.encargados[i].getSueldoBasico();}
+           this.encargados[i].setSueldoBasico(aux+(this.encargados[i].getEmpleados()*1000));
+           aux=this.encargados[i].getSueldoBasico();
+           vector [i]=aux;}
+    return vector;   
+   };
+
+    @Override
+    public String toString() {
+        String aux;
+        aux= "Nombre Empresa: " + nombreEmpresa + "direccion: " + direccion + this.directorEjecutivo.toString();
+        for (int i=0;i<this.diml; i++)
+            aux+= this.encargados[i].toString();
+        return aux;
+    }
+  
+   
+}public class Encargado {
+  private String nombreEncargado;
+  private int DNIEncargado;
+  private int ingresoAño;
+  private double sueldoBasico;
+  private int empleados;
+
+    public Encargado(String nombreEncargado, int DNIEncargado, int ingresoAño, double sueldoBasico, int empleados) {
+        this.nombreEncargado = nombreEncargado;
+        this.DNIEncargado = DNIEncargado;
+        this.ingresoAño = ingresoAño;
+        this.sueldoBasico = sueldoBasico;
+        this.empleados = empleados;
+    }
+
+    public double getSueldoBasico() {
+        return sueldoBasico;
+    }
+
+    public void setSueldoBasico(double sueldoBasico) {
+        this.sueldoBasico = sueldoBasico;
+    }
+
+    public int getIngresoAño() {
+        return ingresoAño;
+    }
+
+    public void setIngresoAño(int ingresoAño) {
+        this.ingresoAño = ingresoAño;
+    }
+
+    public int getEmpleados() {
+        return empleados;
+    }
+
+    @Override
+    public String toString() {
+        String aux;
+        aux= '\n' + "/ nombre / "+ nombreEncargado+  " / DNI / " + DNIEncargado + "/ año ingreso / " + ingresoAño + " / sueldo basico / " + sueldoBasico + "/ empleados cantidad / " + empleados;
+        return aux;
+    }
+  
+
+}
+public class Program {
+       /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Director D = new Director ("Mercedes", 2000, 1231413,124515,1241);
+        Empresa E; E = new Empresa ("La Empresaria", "Calle 115, num 1823", D,10);
+        Encargado Enc = new Encargado ("Roman", 1241241,2015,509192,3);
+        E.AgregarEncargado(Enc);
+         Encargado Enc2 = new Encargado ("Lucia", 2341241,2018,409192,2);
+        E.AgregarEncargado(Enc2);
+        
+      System.out.println ( E.toString());
+      System.out.println(E.SueldoDirector());
+      System.out.println(E.SueldoEncargado());
+        System.out.println ( E.toString());
+    }
+   }
