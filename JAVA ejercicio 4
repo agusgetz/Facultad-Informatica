@@ -1,0 +1,156 @@
+ublic class Investigador {
+    private String nombreCompleto;
+    private int categoria; 
+    private String especialidad;
+    private Subsidio [] subsidios;
+    private int diml =0;
+
+    public Investigador(String nombreCompleto, int categoria, String especialidad) {
+        this.nombreCompleto = nombreCompleto;
+        this.categoria = categoria;
+        this.especialidad = especialidad;
+        subsidios = new Subsidio [5];
+        
+        int i;
+        for (i=0;i<5;i++)
+            subsidios [i]= new Subsidio(0,null);
+        
+    }
+
+    public boolean getSubsidios(int diml) {
+        return this.subsidios[diml].isOtorgado();
+    }
+    
+    
+    public void agregarSubsidio (Subsidio unSubsidio) {
+    if (diml<5){ 
+        subsidios [diml] = unSubsidio ;
+        diml++;}
+    };
+
+    public int getDiml() {
+        return diml;
+    }
+    public double getDineroSubsidios (){
+        int i;
+        double aux = 0;
+        for (i=0;i<this.diml;i++){
+             if (this.subsidios[i].isOtorgado())
+                       aux = aux + this.subsidios[i].getPedido();}         
+        return aux;  };
+ 
+    public void otorgarTodos (){;
+       int i;
+       for (i=0;i<this.diml;i++){
+            if (!this.subsidios[i].isOtorgado())
+                this.subsidios[i].otorgar(this.subsidios[i].isOtorgado())
+                        ;}    
+        }
+
+    @Override
+    public String toString() {
+    String aux;
+    aux= "nombre del investgiador: " + this.nombreCompleto + "categoria: " + this.categoria;
+    aux += " " + "especialidad: " + this.especialidad + "total subsidios recibidos: "+ this.getDineroSubsidios();
+    return aux;
+    }
+    
+}
+
+public class Subsidio {
+    
+    private double pedido; 
+    private String motivo;
+    private boolean otorgado = false;
+
+    public Subsidio(double pedido, String motivo) {
+        this.pedido = pedido;
+        this.motivo = motivo;
+    }
+
+    public double getPedido() {
+        return pedido;
+    }
+
+    public void otorgar (boolean otorgado) {
+          this.otorgado = true;
+
+    }
+
+    public boolean isOtorgado() {
+         return otorgado;
+    }
+}
+
+public class Proyect {
+    private String nombreProyecto;
+    private int codigo;
+    private String nombreCompletoDirector;
+    Investigador [] investigadores;
+    private int diml = 0 ;
+
+    public Proyect(String nombreProyecto, int codigo, String nombreCompletoDirector) {
+        this.nombreProyecto = nombreProyecto;
+        this.codigo = codigo;
+        this.nombreCompletoDirector = nombreCompletoDirector;
+        this.investigadores = new Investigador[50]; 
+        int i;
+                for (i=0; i<50;i++)
+                    this.investigadores[i]= new Investigador(null,0,null);
+    }
+  
+    public void agregarInvestigador (Investigador unInvestigador){
+    if (this.diml < 50) {
+        this.investigadores[this.diml]= unInvestigador;
+        this.diml++;}
+    };
+    public double dineroTotalOtorgado(){
+        int i;
+        double aux =0;
+        for (i=0;i<diml; i++)
+           aux= aux + this.investigadores [i].getDineroSubsidios();
+         return aux;}
+
+
+
+    @Override
+    public String toString() {
+    String aux;
+    int i;
+    aux= "el nombre del proyecto es: " + this.nombreProyecto + "codigo: " + this.codigo+ "director: " + this.nombreCompletoDirector ; 
+    for (i=0;i<this.diml;i++){    
+        aux += " datos del investigador " + (i+1)+ " :"  + this.investigadores[i].toString()
+          ;}
+    return aux;
+    }   
+}
+public class Program {
+     public static void main(String[] args) {
+       
+         Proyect P = new Proyect ("las vacuolas de las celulas vegatales de la especia lactis iurectis",24531, "Lucia Guiterres")
+                 ;
+         Investigador I1 = new Investigador("Sonia Lainez", 4,"Biologia Vegetal"); 
+         Investigador I2 = new Investigador("Ester Suarez", 5,"Biologia Vegetal");
+         Investigador I3 = new Investigador("Leon Arriera", 4,"Biologia Molecular");
+         P.agregarInvestigador(I1);
+         P.agregarInvestigador(I2);
+         P.agregarInvestigador(I3);
+         Subsidio S1= new Subsidio (65000, "microscopio");
+         Subsidio S2= new Subsidio (50000, "muestras");
+         Subsidio S3= new Subsidio (20000, "repuestos");
+         Subsidio S4= new Subsidio (10000, "material de prueba");
+         Subsidio S5= new Subsidio (90000, "lentes");
+         P.investigadores[0].agregarSubsidio(S1);
+         P.investigadores[0].agregarSubsidio(S2);
+         P.investigadores[1].agregarSubsidio(S3);
+         P.investigadores[1].agregarSubsidio(S4);
+         P.investigadores[2].agregarSubsidio(S5);
+         P.investigadores[0].otorgarTodos();
+         P.investigadores[2].otorgarTodos();
+         P.investigadores[1].otorgarTodos();
+         System.out.println (P.toString());
+         
+    }
+    
+}
+
