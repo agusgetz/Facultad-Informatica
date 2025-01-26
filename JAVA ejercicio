@@ -1,0 +1,335 @@
+/**
+
+El Servicio Meteorológico Nacional necesita un sistema que permita registrar, para una
+determinada estación meteorológica, la temperatura promedio mensual de N años
+consecutivos a partir de un año A dado. Además, necesita dos versiones del sistema: una
+que tenga funcionalidad para reportar el promedio histórico por años y otra que tenga
+funcionalidad para reportar el promedio histórico por meses. Esto se detalla más adelante.
+De la estación, interesa conocer: nombre, y latitud y longitud donde se encuentra.
+Implemente las clases, constructores y métodos que considere necesarios para:
+a) Crear el sistema de registro/reporte, que funcionará en una determinada estación,
+para N años consecutivos a partir de un año A. Inicie cada temperatura en un valor
+muy alto.
+b) Registrar la temperatura de un mes y año recibidos por parámetro. Nota: El mes está
+en rango 1..12 y el año está en rango A..A+N-1.Taller de Programación 2024 – Módulo POO
+c) Obtener la temperatura de un mes y año recibidos por parámetro. Nota: El mes está
+en rango 1..12 y el año está en rango A..A+N-1. En caso de no haberse registrado
+temperatura para ese mes/año se retorna el valor muy alto.
+d) Devolver un String que concatena el mes y año en que se registró la mayor
+temperatura. Nota: Suponga que ya están registradas las temperaturas de todos
+los meses y años.
+e) Devolver un String con el nombre de la estación, su latitud y longitud, y los promedios
+mensuales o anuales según corresponda:
+- La versión del sistema que reporta por años deberá calcular el promedio para
+cada año (el promedio del año X se calcula con los datos mensuales de ese año).
+Ej: “La Plata (34,921 S - 57,955 O):
+- Año 2020: 23,8 ºC;
+- Año 2021: 26,1 ºC;
+- Año 2022: 25,3 ºC. ”
+- La versión del sistema que reporta por meses deberá calcular el promedio para
+cada mes (el promedio del mes M se calcula con los datos de todos los años en ese
+mes).
+Ej: “La Plata (34,921 S - 57,955 O):
+- Enero: 28,2 ºC;
+- Febrero: 26,8 ºC;
+- Marzo: 24.3 ºC
+- …..”
+
+
+
+**/
+
+
+package estacion;
+
+
+
+public abstract class  Estacion {
+    private String nombre;
+    private double latitud;
+    private double longitud;
+    private String lugar;
+    private int meses = 12;
+    private int cantaños;
+    private double [][] temperatura;
+    private int añoinicio;
+    
+ 
+    public Estacion(String unNombre, double unaLatitud, double unaLongitud, String unLugar, int unaCantAños, int unAñoInicio) {
+        this.setNombre(unNombre);
+        this.setLatitud(unaLatitud);
+        this.setLongitud(unaLongitud);
+        this.setLugar(unLugar);
+        
+       
+        this.setCantaños(unaCantAños);
+        this.setAñoinicio(unAñoInicio);
+        this.temperatura  = new double [cantaños][meses] ;
+     
+    }
+
+  
+    public void setTemperatura( int unAño, int unMes,double promedio) {
+       
+        temperatura [(unAño-añoinicio)][(unMes-1)] = promedio;
+    }
+
+  public void setTemperatura() {
+        int i;
+        int j;
+        
+          
+             for (j=0; j<cantaños;j++){
+              for (i=0; i<12;i++){
+              temperatura[j][i] = 999;}
+             }
+    }
+
+    public int getMeses() {
+        return meses;
+    }
+
+    
+    
+    
+    public void setAñoinicio(int añoinicio) {
+        this.añoinicio = añoinicio;
+    }
+
+    public int getAñoinicio() {
+        return añoinicio;
+    }
+
+    public int getCantaños() {
+        return cantaños;
+    }
+
+    public void setCantaños(int cantaños) {
+        this.cantaños = cantaños;
+    }
+
+    public double[][] getTemperatura() {
+        return temperatura;
+    }
+
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+   
+    public double getTemperatura(int año, int mes ) {
+        return this.temperatura [(año-añoinicio)][mes-1];
+    }
+
+ 
+    public String toString() {
+        String aux;
+        aux= "El nombre de la estacion es: " + " " + nombre+ " " + "ubicado en: " +  " " + lugar+  " " +"lat:" +  " " + latitud +  " " + "long:"+  " " +longitud;
+        return aux;}
+        
+        //Devolver un String que concatena el mes y año en que se registró la mayor
+//temperatura. Nota: Suponga que ya están registradas las temperaturas de todos
+//los meses y años
+
+public String getMayor () {
+    String aux;
+    double maximo;
+    maximo=0;
+    int i,j;
+    int añomax=0;
+    int mesmax=0;
+    
+        for (j=0;j<this.getCantaños();j++){
+            
+   
+            for (i=0;i<12;i++){
+                if (this.getTemperatura(j+this.getAñoinicio(), (i+1)) > maximo) {
+                     maximo = this.getTemperatura((j+this.getAñoinicio()), (i+1)) ; 
+                     mesmax=i;
+                     añomax = j;}
+            }
+        }
+    aux= "el mes y año con mayor temperatura es: " + (mesmax +1 )+"/"+(añomax+this.getAñoinicio());
+    return aux;
+    }
+}
+
+public class SistemaAño extends Estacion {
+    private  double [] vectorAños ;
+
+
+    public SistemaAño(String unNombre, double unaLatitud, double unaLongitud, String unLugar, int unaCantAños, int unAñoInicio) {
+        super(unNombre, unaLatitud, unaLongitud, unLugar, unaCantAños, unAñoInicio);
+        vectorAños = new double [super.getCantaños()];
+    }
+
+    public double getVectorAños(int diml) {
+        return vectorAños[diml];
+    }
+
+    public void setVectorAños(int diml, double unPromedio) {
+        this.vectorAños [diml]= unPromedio;
+    }
+
+
+    public String toString (double [] [] unaMatriz) {
+        System.out.println (super.toString());
+        int i,j;
+        double suma, promedio;
+        
+       for (i=0;i<super.getCantaños();i++){
+          suma= 0;
+                     
+           for  (j=0;j<super.getMeses();j++){
+                    suma= suma + super.getTemperatura((super.getAñoinicio()+i), (j+1));
+                    
+                    }
+                     System.out.println (suma);   
+           promedio = suma/super.getMeses();
+           System.out.println (promedio);
+           this.setVectorAños(i, promedio);
+    }
+                   
+     String aux;
+  
+     for (i=0; i<super.getCantaños();i++)   {
+          
+            aux = "el promedio del año: " + (super.getAñoinicio() +i) + "es :" + " " + this.getVectorAños(i);
+            System.out.println (aux);
+
+         }
+     aux= "fin";
+       return aux;
+    }
+}
+
+public class SistemaMes extends Estacion {
+      private  double [] vectorMeses ;
+
+
+    public SistemaMes(String unNombre, double unaLatitud, double unaLongitud, String unLugar, int unaCantAños, int unAñoInicio) {
+        super(unNombre, unaLatitud, unaLongitud, unLugar, unaCantAños, unAñoInicio);
+        vectorMeses = new double [super.getMeses()];
+    }
+
+    public double getVectorMeses(int diml) {
+        return vectorMeses [diml];
+    }
+
+    public void setVectorMeses(int diml, double unPromedio) {
+        this.vectorMeses [diml]= unPromedio;
+    }
+
+
+    public String toString (double [] [] unaMatriz) {
+        System.out.println (super.toString());
+        int i,j;
+        double suma, promedio;
+        
+       for (i=0;i<super.getMeses();i++){
+          suma= 0;
+                     
+           for  (j=0;j<super.getCantaños();j++){
+                    suma = suma + super.getTemperatura((super.getAñoinicio()+j), (i+1));
+                    System.out.println (i +"/" + j+ " " + super.getTemperatura((super.getAñoinicio()+j), (i+1)));
+                    }
+                     ;   
+           promedio = suma/super.getCantaños();
+           System.out.println ("suma /" + suma + "promedio/ " +promedio);
+           this.setVectorMeses(i, promedio);
+    }
+                   
+     String aux;
+  
+     for (i=0; i<super.getMeses();i++)   {
+          
+            aux = "el promedio del mes: " + (i+1) + "es :" + " " + this.getVectorMeses(i);
+            System.out.println (aux);
+
+         }
+     aux= "fin";
+       return aux;
+       
+    }
+}
+
+public class Program {
+    
+     public static void main(String[] args) {
+         //primera estacion
+         
+        int añoinicio = 2021;
+        int cantaños = 3;
+        int i,j;
+        SistemaAño Est;
+        
+        Est = new SistemaAño("La Plata", -34.921, -57.955, "Prov.  de Buenos Aires", cantaños,añoinicio);
+        for (i=0;i<cantaños;i++)
+            for (j=0;j<12;j++)
+                Est.setTemperatura((añoinicio+i), (j+1), GeneradorAleatorio.generarDouble(40));
+  
+        
+    for (i=0;i<cantaños;i++) 
+        System.out.println (Est.getVectorAños(i));
+        
+
+      System.out.println (Est.toString());
+      
+      System.out.println (Est.getMayor());
+      
+      System.out.println (Est.toString(Est.getTemperatura()));
+      
+      //segunda estacion
+        int añoinicio2 = 2020;
+        int cantaños2 = 4;
+        
+      SistemaMes Est2 = new SistemaMes ("Mar del Plata", -38.002, -57.556, "Prov de Bs. As.",cantaños2,añoinicio2);
+      
+       for (i=0;i<12;i++)
+            for (j=0;j<cantaños;j++)
+                Est2.setTemperatura((añoinicio+j), (i+1), GeneradorAleatorio.generarDouble(40));
+  
+        
+    for (i=0;i<12;i++) 
+          System.out.println (Est2.getVectorMeses(i));
+        
+
+      System.out.println (Est2.toString());
+      
+      System.out.println (Est2.getMayor());
+      
+      System.out.println (Est2.toString(Est.getTemperatura()));
+      
+}
+}
+    
+  
