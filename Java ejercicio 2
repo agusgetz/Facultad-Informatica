@@ -1,0 +1,154 @@
+public abstract class Alumnos {
+    private int DNI;
+    private String nombre ;
+    private Materia [] materiasAprobadas;
+    private int dimf;
+    private int diml = 0;
+
+    public Alumnos(int DNI, String nombre, int dimf) {
+        this.dimf= dimf;
+        this.DNI = DNI;
+        this.nombre = nombre;
+        this.materiasAprobadas = new Materia[this.dimf];
+            for (int i=0; i<this.dimf;i++)
+                this.materiasAprobadas[i]= null;}
+        
+  
+    public void AgregarMateriaAprobada(Materia M){
+        if (this.diml<this.dimf){
+            this.materiasAprobadas[this.diml]=M;
+            this.diml++ ;}
+    }
+    
+    private boolean TesisAprobada(){
+        boolean esta; esta = false;int i=0;
+        while (this.diml<this.dimf && (esta==false)){
+            if (this.materiasAprobadas[i].getNombreMateria() == "Tesis")
+                esta=true;
+         i++;}
+       return esta;}
+       
+    public boolean EstaGraduado (int cant){
+        boolean aux=false;
+        if ((this.diml+1) >= cant && (this.TesisAprobada()))
+                aux = true;
+        return aux;
+}
+
+    @Override
+    public String toString() {
+        String aux= "Nombre: " + " "+ this.nombre+ " " + "DNI:" + " "+ this.DNI+ '\n';
+        for (int i=0; i<this.diml;i++)
+            aux += this.materiasAprobadas[i].toString();
+        if (this.EstaGraduado(20))
+             aux+= "Esta graduado";
+                else
+            aux+= "No esta graduado" + '\n';
+               
+        return aux;
+    }
+}
+
+public class Fecha {
+    private int dia;
+    private int mes;
+    private int año;
+
+    public Fecha(int dia, int mes, int año) {
+        this.dia = dia;
+        this.mes = mes;
+        this.año = año;
+    }
+
+    @Override
+    public String toString() {
+        String aux;
+        aux= "dia:" + " " +this.dia+ " " +"mes:" + " " +this.mes +  " " + "año:"+ " " + this.año;
+        return aux; //To change body of generated methods, choose Tools | Templates.
+    }
+}
+public class AlumnoDeDoctorado extends Alumnos{
+    private String tituloUniversitario;
+    private String universidadDeOrigen;
+
+    public AlumnoDeDoctorado(String tituloUniversitario, String universidadDeOrigen, int DNI, String nombre, int dimf) {
+        super(DNI, nombre, dimf);
+        this.tituloUniversitario = tituloUniversitario;
+        this.universidadDeOrigen = universidadDeOrigen;
+    }
+
+    @Override
+    public String toString() {
+        String aux=" ";
+        aux= super.toString();
+        aux+= "titulo Universitario" + " " + tituloUniversitario + " "+ "universidad De Origen" + " "+ universidadDeOrigen ;
+        return aux;
+    }
+}
+
+public class AlumnoDeGrado extends Alumnos {
+    private String carrera;
+
+    public AlumnoDeGrado(String carrera, int DNI, String nombre, int dimf) {
+        super(DNI, nombre, dimf);
+        this.carrera = carrera;
+    }
+
+    @Override
+    public String toString() {
+        String aux = " ";
+        aux= super.toString();
+        aux+= "Carrera: "+ " "+ this.carrera;
+        return aux;
+    }
+}
+
+public class Materia {
+    private String nombreMateria;
+    private double nota;
+    private Fecha fecha;
+
+    public Materia(String nombreMateria, double nota, int dia, int mes, int año) {
+        this.fecha = new Fecha(dia,mes,año);
+        this.nombreMateria = nombreMateria;
+        this.nota = nota;}
+
+    public String getNombreMateria() {
+        return nombreMateria;
+    }
+
+    @Override
+    public String toString() {
+        String aux= '\n' + "";
+        aux= "Materia: " + " "+ this.nombreMateria + " "+ "Nota:" + " " + this.nota;
+        aux+= this.fecha.toString() + '\n';
+        return aux;
+    }
+
+public class Program {
+        /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+       
+        AlumnoDeGrado A = new AlumnoDeGrado ("Sociologia", 2733628,"Manuel",50);
+        
+        Materia M = new Materia ("Teoria Social", 8.3, 30,5,2010);
+        A.AgregarMateriaAprobada(M);
+        
+        Materia T ; 
+        T=new Materia ("Metodologia", 7.3, 20,8,2011);
+        A.AgregarMateriaAprobada(T);
+        
+        AlumnoDeDoctorado P = new AlumnoDeDoctorado ("Economista","Universidad de Buenos Aires",  3452235, "Ricardo", 50);
+        Materia Y = new Materia ("Matematica 1", 6.0,5,9,2007);
+        P.AgregarMateriaAprobada(Y);
+        
+        Materia W = new Materia ("Matematica 2", 8,7,11,2008);
+        P.AgregarMateriaAprobada(W);
+        
+        System.out.println (A.toString());
+        System.out.println (P.toString());
+    }
+    
+}
