@@ -1,0 +1,123 @@
+public class Funciones {
+    private String titulo;
+    private Fecha fecha;
+    private Hora hora;
+    private int filas;
+    private int asientos;
+    private Butaca [] [] butacas;
+  
+
+    public Funciones(String titulo, int dia, int mes, int año,int minutos, int horas, int filas, int asientos) {
+        this.titulo = titulo;
+        Fecha f= new Fecha (dia,mes,año);
+        this.fecha = f;
+        Hora h= new Hora (minutos,horas);
+        this.hora = h;
+        this.filas=filas;
+        this.asientos=asientos;
+        this.butacas = new Butaca [this.filas] [this.asientos];
+        for (int i=0; i<this.filas;i++)
+            for (int j=0; j<this.asientos;j++)
+                this.butacas[i][j]= new Butaca (i,j);}
+        
+    
+    public double Ocupar (int N,int L){
+        double aux;
+        this.butacas[N-1][L-1].setOcupado(true);
+        System.out.println (this.butacas[N][L].isOcupado());
+        aux= this.butacas[N-1][L-1].getPrecio();
+        return aux;
+        };
+    
+    public void Desocupar (int F){
+        for (int i=0; i<this.asientos;i++)
+            this.butacas[F-1][i].setOcupado(false);}
+
+  
+    public String RepresentacionButaca(int B) {
+        String aux="Funcion:" + this.titulo + '\n';
+        for (int i=0;i<this.filas;i++)
+           aux+= this.butacas[i][B-1].toString() + '\n';
+        return aux;
+    }
+
+    @Override
+    public String toString() {
+      String aux="Funcion:" + this.titulo + '\n';
+        for (int i=0;i<this.filas;i++)
+              for (int j=0;j<this.asientos;j++)
+           aux+= this.butacas[i][j].toString() + '\n';
+        return aux;
+    }
+    }
+
+public class Hora {
+    private int minutos;
+    private int horas;
+
+    public Hora(int minutos, int horas) {
+        this.minutos = minutos;
+        this.horas = horas;
+    }
+}
+
+public class Fecha {
+    private int dia;
+    private int mes;
+    private int año;
+
+    public Fecha(int dia, int mes, int año) {
+        this.dia = dia;
+        this.mes = mes;
+        this.año = año;
+    }
+}
+
+public class Butaca {
+    private String descriptor;
+    private double precio;
+    private boolean ocupado;
+
+    public Butaca(int unaFila, int unaButaca) {
+        this.descriptor = "Butaca" + (unaFila+1) + (unaButaca+1) ;
+        this.precio = 800 + (100*+ (unaFila+1));
+        this.ocupado = false;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
+    }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    @Override
+    public String toString() {
+        String aux="";
+        aux= " " +  " " +this.descriptor+" "+ "Precio:"+ " "+this.precio+ " " +"estado: " + " " + this.ocupado;
+        return aux;
+    }
+}
+public class Programa {
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+      Funciones LaIlliada = new Funciones ("La Illiada",10,3,2010,20,30,40,10);
+      LaIlliada.Ocupar(3, 6);
+      LaIlliada.Ocupar(2, 4);    
+      LaIlliada.Ocupar(3, 2);
+      System.out.println(LaIlliada.RepresentacionButaca(6));
+      System.out.println(LaIlliada.toString());
+      LaIlliada.Ocupar(2,4);
+      System.out.println(LaIlliada.RepresentacionButaca(4));
+      
+    }
+    
+}
