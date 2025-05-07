@@ -1,0 +1,12 @@
+
+//*2. Escribir un programa que defina una variable de tipo entero sin signo, y luego imprima su
+valor en hexadecimal. */
+
+pub fn pasarahexa () {
+
+let num:u32=100;
+
+println! ("numero en hexadecimal");
+println! ("{:X?}", num);
+
+}
