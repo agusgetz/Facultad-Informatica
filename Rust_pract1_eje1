@@ -1,0 +1,15 @@
+
+pub fn calcularflotante() {
+let num: f64=100.5;
+let mut input: String = String::new();
+io::stdin().read_line(&mut input).unwrap();
+let ingreso:f64= f64::from_str(&input.trim()).unwrap();
+let rst: f64= num * ingreso;
+println! ("{}",rst);
+let rst: f64= num/ingreso;
+println! ("{}",rst);
+let rst: f64 =num+ingreso;
+println! ("{}",rst);
+let rst: f64=num-ingreso;
+println! ("{}",rst);
+}
