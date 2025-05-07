@@ -1,0 +1,145 @@
+Ej 1
+
+pub fn calcularflotante() {
+let num: f64=100.5;
+let mut input: String = String::new();
+io::stdin().read_line(&mut input).unwrap();
+let ingreso:f64= f64::from_str(&input.trim()).unwrap();
+let rst: f64= num * ingreso;
+println! ("{}",rst);
+let rst: f64= num/ingreso;
+println! ("{}",rst);
+let rst: f64 =num+ingreso;
+println! ("{}",rst);
+let rst: f64=num-ingreso;
+println! ("{}",rst);
+}
+
+//*2. Escribir un programa que defina una variable de tipo entero sin signo, y luego imprima su
+valor en hexadecimal. */
+
+pub fn pasarahexa () {
+
+let num:u32=100;
+
+println! ("numero en hexadecimal");
+println! ("{:X?}", num);
+
+}
+
+/*3. Escribir un programa que defina una variable de tipo booleano, y luego permita al usuario
+ingresar un valor booleano por teclado para actualizar su valor haciendo las operaciones
+and y or. Se deben imprimir ambos resultados. */
+
+use std::io;
+use std::str::FromStr;
+
+pub fn funcionbool () {
+
+let estado: bool=true;
+
+let mut input: String = String::new();
+io::stdin().read_line(&mut input).unwrap();
+let input= bool::from_str(&input.trim()).unwrap();
+println! ("{}", estado);
+let rst:bool;
+if estado==true && input==true {rst=true}
+else {rst=false};
+println! ("{}", rst);
+
+}
+
+/*4. Escribir un programa que defina una tupla que contenga una cadena, un número entero
+con signo y un valor booleano, y luego imprima cada valor de la tupla */
+
+pub fn tuplaprueba () {
+let mut tupla: (i32,String,bool)=(78,"valor".to_string(),false);
+println! ("{}",tupla.0);
+println! ("{}",tupla.1);
+println! ("{}",tupla.2);
+tupla.0 =34;
+tupla.1 = "hola".to_string();
+tupla.2=true;
+println! ("{}",tupla.0);
+println! ("{}",tupla.1);
+println! ("{}",tupla.2);
+}
+
+5- Escribir un programa que defina una variable de tipo cadena, y luego permita al usuario
+ingresar una cadena por teclado para concatenar su valor. El programa debe imprimir la
+cadena en mayúsculas. */
+use::std::io;
+use::std::io::Write;
+
+pub fn cadenaprueba () {
+let cadena4:String;
+cadena4 = "prueba".to_string();
+let mut cadena1:String=String::new();
+let mut cadena2:String=String::new();
+cadena1= "valor original".to_string();
+io::stdin().read_line(&mut cadena2).unwrap();
+cadena1 += &cadena2.to_string(); //concateno pero con texto//
+println! ("{}",cadena1.to_uppercase());
+}
+
+6- Escribir un programa que defina una variable de tipo entero sin signo, y luego permita al
+usuario ingresar un número entero por teclado para sumarse con la variable definida. El
+programa debe imprimir el valor del número elevado al cuadrado.
+*/
+use::std::io;
+use::std::str::FromStr;
+
+pub fn numeroentero() {
+
+let mut entero:u32=54;
+
+let mut valor:String=String::new();
+io::stdin().read_line(&mut valor).unwrap();
+
+let entero2:u32=u32::from_str(&valor.trim()).unwrap();
+
+entero+=&entero2; // entero+=entero2;
+entero*=2;//entero*=2;
+println!("{}",entero);
+}
+
+7- Escribir un programa que defina una variable de tipo arreglo que contenga seis números
+enteros, y luego multiplique cada valor del arreglo por un valor constante definido,
+modificando el contenido del arreglo.
+*/
+
+pub fn arregloprueba(){
+let num:u32=32;
+let arreglo: [u32;6]=[4,5,6,7,8,9];
+for mut elemento in arreglo {
+elemento *= &num;
+println!("este es el elemento del arreglo multiplicado {elemento}");
+}
+}
+
+8- Escribir un programa que defina una constante de tipo cadena, y luego imprima el
+número de veces que un caracter específico ingresado por el usuario aparece en la cadena.
+Se debe imprimir el resultado.*/
+use std::{self, io::stdin};
+
+pub fn cadenaprueba2() {
+const CONST:String= String::from("prueba constante de string");
+let mut buf:String = String::new();
+stdin().read_line(&mut buf);
+println!("{buf}");
+
+//contar la cant de veces que el valor har aparece en la cadena
+}
+
+9- Escribir un programa que defina un arreglo de 5 números enteros, y luego imprima la
+suma de los valores del arreglo. */
+
+pub fn arregloprueba2 () {
+let arreglo:[u32 ;5] = [3,4,6,2,8];
+let mut total:u32=0;
+for elemento in arreglo {
+total += elemento;
+};
+println!("este es el elemento del arreglo {total}");
+}
+
