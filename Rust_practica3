@@ -1,5 +1,6 @@
+Ejercicio 1 practica 3
 
-*Nota: Para todos los ejercicios realizar los tests de unidad correspondientes.
+/*Nota: Para todos los ejercicios realizar los tests de unidad correspondientes.
 
 1- Escribir un programa que defina una estructura Persona que tenga campos para el
 nombre, la edad y la dirección(que puede ser nulo al momento de la creación de una
@@ -12,18 +13,11 @@ person.to_string() , donde person es una variable del tipo Persona.
 ➢ actualizar_direccion(nueva_direccion)*/
 
 fn main() {
-struct Persona {
-nombre:String,
-edad:u32,
-direccion:Option <String> ,
-}
 
 impl Persona {
-
 fn new (nombre:String, edad:u32, direccion:Option <String> ) -> Persona {
 Persona {nombre,edad,direccion}
 }
-
 fn nueva_persona (&mut self,nombre:String, edad:u32, direccion:Option <String> ) {
 self.nombre=nombre;
 self.edad=edad;
@@ -32,7 +26,7 @@ fn to_string (&self)-> String {
 let a: String = self.edad.to_string();
 let b: String = self.nombre.to_string();
 let mut c: String = "sin direccion".to_string();
-if self.direccion.is_some() { c= self.direccion.clone().unwrap()} ;
+if let Some (valor) = &self.direccion {c= valor.to_string()};
 let mut output:String = a;
 output.push_str(&b);
 output.push_str(&c);
@@ -46,34 +40,108 @@ fn nueva_direccion (&mut self, direccion:Option<String> ) {
 self.direccion = direccion;
 }
 }
-
-let mut persona1 : Persona = Persona {nombre: "Fernanda".to_string(), edad: 45, direccion: Some ("calle 9".to_string()) };
+struct Persona {
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+let mut persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
 println!(" {}",persona1.to_string());
 println!(" {}",persona1.obtener_edad());
 persona1.nueva_direccion(Some ("calle 14".to_string()));
 println!(" {}",persona1.to_string());
-
 let mut persona2 : Persona = Persona {nombre: " ".to_string(), edad: 00, direccion: None };
 println!(" {}",persona2.to_string());
 persona2.nueva_persona("Martin".to_string(), 28, Some ("calle 67".to_string()));
 println!(" {}",persona2.obtener_edad());
 persona2.nueva_direccion(Some ("calle 56".to_string()));
 println!(" {}",persona2.to_string());
-
-
 let mut persona3 : Persona = Persona {nombre: " ".to_string(), edad: 00, direccion: None };
 println!(" {}",persona3.to_string());
 persona3.nueva_persona("Pedro".to_string(), 65, Some ("calle 72".to_string()));
 println!(" {}",persona3.obtener_edad());
 persona3.nueva_direccion(None);
 println!(" {}",persona3.to_string());
-
 let mut persona4:Persona = Persona::new("Laura".to_string(), 50, None);
 println!(" {}",persona4.to_string());
+}
+#[test]
+fn prueba_persona_obtener_edad (){
+struct Persona {
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn obtener_edad (&self) -> u32{
+let output:u32 = self.edad;
+output
+} }
 
+let persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
+let e= persona1.obtener_edad();
+assert_eq!(e, 45);
 }
 
-Escribir un programa que defina la estructura Rectángulo que tenga campos para la
+
+#[test]
+fn prueba_nueva_direccion(){
+
+struct Persona {
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+
+impl Persona {
+fn nueva_direccion (&mut self, direccion:Option<String> ) {
+self.direccion = direccion;
+}
+}
+
+let mut persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
+let d = persona1.nueva_direccion(Some ("calle 14".to_string()));
+assert_eq!(d, ());
+}
+
+#[test]
+fn prueba_to_string(){
+
+struct Persona {
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn to_string (&self)-> String {
+let a: String = self.edad.to_string();
+let b: String = self.nombre.to_string();
+let mut c: String = "sin direccion".to_string();
+
+if let Some (valor) = &self.direccion {c= valor.to_string()};
+let mut output:String = a;
+output.push_str(&b);
+output.push_str(&c);
+return output
+}
+}
+
+let persona1 : Persona = Persona {nombre: "_Fernanda".to_string(),
+edad: 45, direccion: Some ("_calle 9".to_string()) };
+let s = persona1.to_string();
+assert_eq!(s, "45_Fernanda_calle 9");
+}
+
+
+
+
+Ejercicio 2 practica 3
+
+
+* Escribir un programa que defina la estructura Rectángulo que tenga campos para la
 longitud y el ancho. Para dicha estructura implemente los siguientes métodos:
 ➢ new: que pasando los parámetros correspondientes, crea un Rectángulo y lo
 retorna.
@@ -81,13 +149,13 @@ retorna.
 ➢ calcular_perimetro: calcula el perímetro y lo retorna.
 ➢ es_cuadrado: retorna true si es cuadrado, false caso contrario */
 
-struct rectangulos {
+pub struct Rectangulo {
 ancho: u32 ,
 alto: u32
 }
-impl rectangulos {
-fn new (ancho:u32, alto:u32) -> rectangulos{
-rectangulos{ancho,alto}
+impl Rectangulo {
+fn new (ancho:u32, alto:u32) -> Rectangulo{
+Rectangulo {ancho,alto}
 }
 fn calcular_perimetro (&self) -> u32 {
 let resultado:u32;
@@ -105,15 +173,40 @@ if self.ancho == self.alto {resultado=true} else {resultado= false};
 resultado
 }
 }
-
 fn main () {
-let estruct :rectangulos = rectangulos::new(23,54);
+let estruct: Rectangulo = Rectangulo::new(23,54);
 println! ( "{}",estruct.calcular_area());
 println! ( "{}",estruct.es_cuadrado());
 println! ( "{}",estruct.calcular_perimetro());
 }
 
-* Escribir un programa que defina una estructura Fecha que tenga campos para el día, el
+
+#[test]
+fn prueba_calcular_area (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r1= r.calcular_area();
+assert_eq!(r1, 1242);
+}
+
+#[test]
+fn prueba_es_cuadraado (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r2= r.es_cuadrado();
+assert_eq!(r2, false);
+}
+#[test]
+fn prueba_calcular_perimetro (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r3= r.calcular_perimetro();
+assert_eq!(r3, 77);
+}
+
+
+
+Ejercicio 3 practica 3
+
+
+/* Escribir un programa que defina una estructura Fecha que tenga campos para el día, el
 mes y el año. Para dicha estructura implemente los siguientes métodos:
 ➢ new: que pasando los parámetros correspondientes, crea una Fecha y la retorna.
 ➢ es_fecha_valida: retorna true si es una fecha válida, false caso contrario.//tenga en
@@ -157,7 +250,7 @@ self.dia= self.dia + dias;
 fn restar_dias (&mut self, dias:u32) {
 self.dia= self.dia - dias;
 }
-fn es_mayor (&mut self, f:&Fecha) -> bool {
+fn es_mayor (& self, f:&Fecha) -> bool {
 let output:bool;
 if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) ||
 (f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
@@ -169,97 +262,217 @@ output
 
 let mut f:Fecha= Fecha::new(56, 23, 45);
 let mut d:Fecha= Fecha::new(2, 6, 1990);
-let mut g:Fecha=Fecha::new(5, 8, 1991);
+let g:Fecha=Fecha::new(5, 8, 1991);
 println! ("{},{},{}",f.es_biciesto(),f.es_fecha_valida(),f.es_mayor(&g));
 println! ("{},{},{}",d.es_biciesto(),d.es_fecha_valida(),d.es_mayor(&g));
 }
 
 
-ej 4
 
-fn main () {
-//moto
-let marca: String = "Random".to_string();
-let modelo: i32 = 2004;
-let precio_bruto: f64 = 506_654.93;
-let impuesto: Option<f64> = Some(309.0);
-let moto1: Moto=Moto::new (marca,modelo,precio_bruto) ;
-let cantidad= 7;
-let precio_final: f64= moto1.calcular_precio_final(impuesto);
-let mut venta1:Venta<Moto>=Venta::new(moto1, cantidad, precio_final, None);
-let dato = venta1.precio_venta();
-// auto
-let marca: String = "Fiat".to_string();
-let modelo: i32 = 2009;
-let precio_bruto: f64 = 5_006_654.93;
-let cantidad= 3;
-let impuesto: Option<f64> = Some(1_492.0);
-let bol=true;
-let mut auto1: Auto=Auto::new (marca,modelo,precio_bruto,bol) ;
-let precio_final: f64= auto1.calcular_precio_final(impuesto);
-let mut venta2:Venta<Auto>=Venta::new(auto1, cantidad, precio_final, None);
-let dato2 = venta2.precio_venta();
-//
-let mut mis_ventas =Vec::new();
-mis_ventas.push(VentaVehiculo::VentaMoto(venta1));
-mis_ventas.push(VentaVehiculo::VentaAuto(venta2));
-for i in mis_ventas {println!("{:#?}",i)};
+#[test]
+fn prueba_es_biciesto(){
+
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
 }
-#[derive(Debug)]
-struct Moto {
-marca:String,
-modelo:i32,
-precio_bruto:f64,
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
 }
-impl Moto {
-fn new (marca:String, modelo:i32, precio_bruto:f64) -> Moto {
-Moto{marca,modelo,precio_bruto}
-}
-fn calcular_precio_final (&self, impuestos:Option<f64>) -> f64 {
-let mut precio: f64 = self.precio_bruto;
-if let Some (valor) = impuestos {precio+= valor};
-precio
+
+fn es_biciesto (&self) -> bool {
+let output:bool;
+if self.año == 2024 || self.año == 2020 || self.año == 2016 || self.año == 2012 || self.año == 2008 ||
+self.año == 2004 || self.año == 2000 || self.año == 1996 || self.año == 1992 ||
+self.año == 1988 || self.año == 1986 {output = true}
+else
+{output = false};
+output
 }
 }
-#[derive(Debug)]
-struct Venta <T> {
-producto:T,
-cantidad:i32,
-precio_final_unidad:f64,
-precio_venta:Option<f64>
+
+let p:Fecha=Fecha::new(5, 8, 1991);
+let r:bool= p.es_biciesto();
+assert_eq!(r, false);
+
 }
-impl <T> Venta <T>{
-fn new (producto:T, cantidad:i32, precio_final_unidad:f64, precio_venta:Option<f64>) ->Venta <T>{
-Venta {producto,cantidad,precio_final_unidad,precio_venta}
+
+#[test]
+fn prueba_es_fecha_valida(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
 }
-fn precio_venta (&mut self) -> f64 {
-let precio: f64 = self.precio_final_unidad * self.cantidad as f64;
-self.precio_venta = Some(precio);
-precio
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
 }
-}
-#[derive(Debug)]
-struct Auto {
-marca:String,
-modelo:i32,
-precio_bruto:f64,
-es_importado:bool
-}
-impl Auto {
-fn new (marca:String, modelo:i32, precio_bruto:f64,es_importado:bool) -> Auto {
-Auto {marca,modelo,precio_bruto,es_importado}
-}
-fn calcular_precio_final (&mut self, impuestos:Option<f64>) -> f64 {
-let mut precio: f64 = self.precio_bruto;
-if self.es_importado {precio= precio *1.3};
-if let Some (valor) = impuestos {precio+= valor};
-self.precio_bruto= precio;
-precio
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12
+&& self.año >=1984 && self.año <= 2026 {output = true}
+else { output = false};
+output
 }
 }
-#[derive(Debug)]
-enum VentaVehiculo {
-VentaAuto(Venta <Auto>) ,
-VentaMoto(Venta<Moto>)
+
+let d:Fecha= Fecha::new(2, 6, 1990);
+let r= d.es_fecha_valida();
+assert_eq!(r, true);
 }
+
+#[test]
+fn prueba_es_mayor(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn es_mayor (&self, f:&Fecha) -> bool {
+
+let output:bool;
+if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) ||
+(f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
+else
+{ output = false};
+output
+}
+}
+
+let d:Fecha= Fecha::new(2, 6, 1990);
+let g:Fecha=Fecha::new(5, 8, 1991);
+let r= g.es_mayor(&d);
+assert_eq!(r, true);
+}
+
+
+
+#[test]
+fn prueba_es_biciesto(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_biciesto (&self) -> bool {
+let output:bool;
+if self.año == 2024 || self.año == 2020 || self.año == 2016 || self.año == 2012 || self.año == 2008 ||
+self.año == 2004 || self.año == 2000 || self.año == 1996 || self.año == 1992 ||
+self.año == 1988 || self.año == 1986 {output = true}
+else
+{output = false};
+output
+}
+}
+let p:Fecha=Fecha::new(5, 8, 1991);
+let r:bool= p.es_biciesto();
+assert_eq!(r, false);
+}
+#[test]
+fn prueba_es_fecha_valida(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12
+&& self.año >=1984 && self.año <= 2026 {output = true}
+else { output = false};
+output
+}
+}
+let d:Fecha= Fecha::new(2, 6, 1990);
+let r= d.es_fecha_valida();
+assert_eq!(r, true);
+}
+#[test]
+fn prueba_es_mayor(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_mayor (&self, f:&Fecha) -> bool {
+let output:bool;
+if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) ||
+(f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
+else
+{ output = false};
+output
+}
+}
+let d:Fecha= Fecha::new(2, 6, 1990);
+let g:Fecha=Fecha::new(5, 8, 1991);
+let r= g.es_mayor(&d);
+assert_eq!(r, true);
+}
+
+
+#[test]
+fn sumar_dias(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn sumar_dias (&mut self, dias:u32) {
+self.dia= self.dia + dias;
+}
+}
+
+let mut d:Fecha= Fecha::new(10, 6, 1990);
+d.sumar_dias(5);
+let r= d.dia;
+assert_eq!(r, 15);
+}
+
+#[test]
+fn restar_dias(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn restar_dias (&mut self, dias:u32) {
+self.dia= self.dia - dias;
+}
+}
+
+let mut d:Fecha= Fecha::new(2, 6, 1990);
+d.restar_dias(1);
+assert_eq!(d.dia, 1);
+}
+
 
