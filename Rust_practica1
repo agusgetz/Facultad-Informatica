@@ -117,19 +117,25 @@ println!("este es el elemento del arreglo multiplicado {elemento}");
 }
 }
 
+
+/*
 8- Escribir un programa que defina una constante de tipo cadena, y luego imprima el
 número de veces que un caracter específico ingresado por el usuario aparece en la cadena.
 Se debe imprimir el resultado.*/
 use std::{self, io::stdin};
 
-pub fn cadenaprueba2() {
-const CONST:String= String::from("prueba constante de string");
+fn main ()
+{
+const CONST: &str = "prueba constante de string";
 let mut buf:String = String::new();
-stdin().read_line(&mut buf);
-println!("{buf}");
+stdin().read_line(&mut buf).expect("error1");
+let c:char= buf.trim().parse().expect("error2");
+println!("{c}");
+println!("{}",CONST.chars().filter(|buf| c==*buf).count());
 
 //contar la cant de veces que el valor har aparece en la cadena
 }
+
 
 9- Escribir un programa que defina un arreglo de 5 números enteros, y luego imprima la
 suma de los valores del arreglo. */
