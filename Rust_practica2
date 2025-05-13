@@ -321,18 +321,30 @@ assert_eq!(result, [-1,5, -1, -1, 9])
 }
 
 
-Definir una función llamada ordenar_nombres que recibe un arreglo de String y los
+//Definir una función llamada ordenar_nombres que recibe un arreglo de String y los
 //ordena en orden alfabético.
 
-pub fn ordenar_nombres (array:&mut [String ;5]) {
-array.sort_by(|a: &String,b: &String| a.to_ascii_lowercase())
+pub fn ordenar_nombres (mut array: [String;5]) -> [String;5] {
+array.sort();
+array
 }
 fn main() {
-let mut array:[String;5]=["hola".to_string(),"buenos dias".to_string(), "mañana".to_string(), "jueves".to_string(),"domingo".to_string()];
-for elemento in array {println!("{}",elemento)};
-ordenar_nombres (&mut array);
-for elemento in array {println!("{}",elemento)}
+let mut array:[String;5]=["hola".to_string(),"buenos dias".to_string(),
+"mañana".to_string(), "jueves".to_string(),"domingo".to_string()];
+for elemento in &array {println!("{}",elemento)};
+array = ordenar_nombres(array);
+for elemento in &array {println!("{}",elemento)}
 }
+
+#[test]
+fn prueba_ordenar_string() {
+let mut array:[String;5]=["hola".to_string(),"buenos dias".to_string(),
+"mañana".to_string(), "jueves".to_string(),"domingo".to_string()];
+array = ordenar_nombres(array);
+assert_eq!(array, ["buenos dias", "domingo", "hola", "jueves", "mañana"])
+}
+
+
 
 Definir una función llamada incrementar que recibe como parámetro un número flotante
 //e incrementa en 1 su valor.
