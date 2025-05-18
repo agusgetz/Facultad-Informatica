@@ -1,0 +1,1598 @@
+Tp 3
+
+
+/*Nota: Para todos los ejercicios realizar los tests de unidad correspondientes.
+
+1- Escribir un programa que defina una estructura Persona que tenga campos para el
+nombre, la edad y la dirección(que puede ser nulo al momento de la creación de una
+persona). Para dicha estructura implemente los siguientes métodos:
+➢​ new: que pasando los parámetros correspondientes, crea una Persona y la retorna.
+➢​ to_string: que retorna un string con los datos de la persona concatenados sobre el
+mensaje ejecutado por ej:
+person.to_string() , donde person es una variable del tipo Persona.
+➢​ obtener_edad: retorna la edad de la persona.
+➢​ actualizar_direccion(nueva_direccion)*/
+
+fn main() {
+
+impl Persona {
+fn new (nombre:String, edad:u32, direccion:Option <String> ) -> Persona { 
+Persona {nombre,edad,direccion} 
+} 
+fn nueva_persona (&mut self,nombre:String, edad:u32, direccion:Option <String> ) { 
+self.nombre=nombre;
+self.edad=edad;
+self.direccion=direccion} 
+fn to_string (&self)-> String {
+let a: String = self.edad.to_string();
+let b: String = self.nombre.to_string();
+let mut c: String = "sin direccion".to_string();
+if let Some (valor) = &self.direccion {c= valor.to_string()}; 
+let mut output:String = a;
+output.push_str(&b);
+output.push_str(&c);
+return output
+}
+fn obtener_edad (&self) -> u32{
+let output:u32 = self.edad;
+output 
+}
+fn nueva_direccion (&mut self, direccion:Option<String> ) {
+self.direccion = direccion;
+}
+} 
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+let mut persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
+println!(" {}",persona1.to_string());
+println!(" {}",persona1.obtener_edad());
+persona1.nueva_direccion(Some ("calle 14".to_string()));
+println!(" {}",persona1.to_string());
+let mut persona2 : Persona = Persona {nombre: " ".to_string(), edad: 00, direccion: None }; 
+println!(" {}",persona2.to_string());
+persona2.nueva_persona("Martin".to_string(), 28, Some ("calle 67".to_string()));
+println!(" {}",persona2.obtener_edad());
+persona2.nueva_direccion(Some ("calle 56".to_string()));
+println!(" {}",persona2.to_string());
+let mut persona3 : Persona = Persona {nombre: " ".to_string(), edad: 00, direccion: None }; 
+println!(" {}",persona3.to_string());
+persona3.nueva_persona("Pedro".to_string(), 65, Some ("calle 72".to_string()));
+println!(" {}",persona3.obtener_edad());
+persona3.nueva_direccion(None);
+println!(" {}",persona3.to_string());
+let mut persona4:Persona = Persona::new("Laura".to_string(), 50, None);
+println!(" {}",persona4.to_string());
+}
+#[test]
+fn prueba_persona_obtener_edad (){
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn obtener_edad (&self) -> u32{
+let output:u32 = self.edad;
+output 
+} } 
+
+let persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
+let e= persona1.obtener_edad();
+assert_eq!(e, 45);
+}
+
+
+#[test]
+fn prueba_nueva_direccion(){
+
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+
+impl Persona {
+fn nueva_direccion (&mut self, direccion:Option<String> ) {
+self.direccion = direccion;
+}
+} 
+
+let mut persona1 : Persona = Persona {nombre: "Fernanda".to_string(),
+edad: 45, direccion: Some ("calle 9".to_string()) };
+let d = persona1.nueva_direccion(Some ("calle 14".to_string()));
+assert_eq!(d, ());
+}
+
+#[test]
+fn prueba_to_string(){
+
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn to_string (&self)-> String {
+let a: String = self.edad.to_string();
+let b: String = self.nombre.to_string();
+let mut c: String = "sin direccion".to_string();
+
+if let Some (valor) = &self.direccion {c= valor.to_string()}; 
+let mut output:String = a;
+output.push_str(&b);
+output.push_str(&c);
+return output
+}
+} 
+
+let persona1 : Persona = Persona {nombre: "_Fernanda".to_string(),
+edad: 45, direccion: Some ("_calle 9".to_string()) };
+let s = persona1.to_string();
+assert_eq!(s, "45_Fernanda_calle 9");
+}
+
+
+
+
+
+
+//.....................................
+#[test]
+
+fn prueba_new (){
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn new (nombre:String, edad:u32, direccion:Option <String> ) -> Persona { 
+Persona {nombre,edad,direccion} 
+} 
+} 
+let mut persona1:Persona = Persona::new("Laura".to_string(), 50, None);
+let s=(" {}",persona1.to_string());
+assert_eq!(persona1, ("Laura", 50, None) );
+
+}
+
+
+#[test]
+fn prueba_nueva_persona (){
+struct Persona { 
+nombre:String,
+edad:u32,
+direccion:Option <String> ,
+}
+impl Persona {
+fn new (nombre:String, edad:u32, direccion:Option <String> ) -> Persona { 
+Persona {nombre,edad,direccion} 
+} 
+fn nueva_persona (&mut self,nombre:String, edad:u32, direccion:Option <String> ) { 
+self.nombre=nombre;
+self.edad=edad;
+self.direccion=direccion} 
+} 
+
+let mut persona1 = persona1.nueva_persona("Facu".to_string(), 70, "Calle 7") ;
+assert_eq!(persona1, ("Facu".to_string(), 70, "Calle 7") );
+}
+
+
+* Escribir un programa que defina la estructura Rectángulo que tenga campos para la
+longitud y el ancho. Para dicha estructura implemente los siguientes métodos:
+➢​ new: que pasando los parámetros correspondientes, crea un Rectángulo y lo
+retorna.
+➢​ calcular_area: calcular el área y la retorna.
+➢​ calcular_perimetro: calcula el perímetro y lo retorna.
+➢​ es_cuadrado: retorna true si es cuadrado, false caso contrario */
+
+pub struct Rectangulo {
+ancho: u32 ,
+alto: u32
+}
+impl Rectangulo {
+fn new (ancho:u32, alto:u32) -> Rectangulo{
+Rectangulo {ancho,alto}
+}
+fn calcular_perimetro (&self) -> u32 {
+let resultado:u32;
+resultado = self.ancho + self.alto;
+resultado
+}
+fn calcular_area (&self) -> u32 {
+let resultado:u32;
+resultado = self.ancho * self.alto;
+resultado
+}
+fn es_cuadrado (&self) -> bool {
+let resultado:bool;
+if self.ancho == self.alto {resultado=true} else {resultado= false};
+resultado
+}
+}
+fn main () {
+let estruct: Rectangulo = Rectangulo::new(23,54);
+println! ( "{}",estruct.calcular_area());
+println! ( "{}",estruct.es_cuadrado());
+println! ( "{}",estruct.calcular_perimetro());
+}
+
+
+#[test]
+fn prueba_calcular_area (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r1= r.calcular_area();
+assert_eq!(r1, 1242);
+}
+
+#[test]
+fn prueba_es_cuadraado (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r2= r.es_cuadrado();
+assert_eq!(r2, false);
+}
+#[test]
+fn prueba_calcular_perimetro (){
+let r : Rectangulo = Rectangulo::new(23,54);
+let r3= r.calcular_perimetro();
+assert_eq!(r3, 77);
+}
+
+* Escribir un programa que defina una estructura Fecha que tenga campos para el día, el
+mes y el año. Para dicha estructura implemente los siguientes métodos:
+➢​ new: que pasando los parámetros correspondientes, crea una Fecha y la retorna.
+➢​ es_fecha_valida: retorna true si es una fecha válida, false caso contrario.//tenga en
+cuenta los años bisiestos también.
+➢​ es_bisiesto: retorna true si el año de la fecha pertenece a un año bisiesto.
+➢​ sumar_dias(dias): suma la cantidad de días a la fecha, modificándose
+➢​ restar_dias(dias): resta la cantidad de días a la fecha, modificándose
+➢​ es_mayor(una_fecha): que retorna true si la fecha que recibe el mensaje es mayor a
+la fecha pasada por parámetro. */
+
+fn main () {
+
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12 
+&& self.año >=1984 && self.año <= 2026 {output = true} 
+else { output = false}; 
+output
+}
+fn es_biciesto (&self) -> bool {
+let output:bool;
+if self.año == 2024 || self.año == 2020 || self.año == 2016 || self.año == 2012 || self.año == 2008 || 
+self.año == 2004 || self.año == 2000 || self.año == 1996 || self.año == 1992 || 
+self.año == 1988 || self.año == 1986 {output = true}
+else 
+{output = false}; 
+output 
+}
+fn sumar_dias (&mut self, dias:u32) {
+self.dia= self.dia + dias;
+}
+fn restar_dias (&mut self, dias:u32) {
+self.dia= self.dia - dias;
+}
+fn es_mayor (& self, f:&Fecha) -> bool {
+let output:bool;
+if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) || 
+(f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
+else 
+{ output = false}; 
+output
+}
+}
+
+let mut f:Fecha= Fecha::new(56, 23, 45);
+let mut d:Fecha= Fecha::new(2, 6, 1990);
+let g:Fecha=Fecha::new(5, 8, 1991);
+println! ("{},{},{}",f.es_biciesto(),f.es_fecha_valida(),f.es_mayor(&g));
+println! ("{},{},{}",d.es_biciesto(),d.es_fecha_valida(),d.es_mayor(&g));
+}
+
+
+
+#[test]
+fn prueba_es_biciesto(){
+
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn es_biciesto (&self) -> bool {
+let output:bool;
+if self.año == 2024 || self.año == 2020 || self.año == 2016 || self.año == 2012 || self.año == 2008 || 
+self.año == 2004 || self.año == 2000 || self.año == 1996 || self.año == 1992 || 
+self.año == 1988 || self.año == 1986 {output = true}
+else 
+{output = false}; 
+output 
+}
+}
+
+let p:Fecha=Fecha::new(5, 8, 1991);
+let r:bool= p.es_biciesto();
+assert_eq!(r, false);
+
+}
+
+#[test]
+fn prueba_es_fecha_valida(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12 
+&& self.año >=1984 && self.año <= 2026 {output = true} 
+else { output = false}; 
+output
+}
+}
+
+let d:Fecha= Fecha::new(2, 6, 1990);
+let r= d.es_fecha_valida();
+assert_eq!(r, true);
+}
+
+#[test]
+fn prueba_es_mayor(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn es_mayor (&self, f:&Fecha) -> bool {
+
+let output:bool;
+if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) || 
+(f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
+else 
+{ output = false}; 
+output
+}
+}
+
+let d:Fecha= Fecha::new(2, 6, 1990);
+let g:Fecha=Fecha::new(5, 8, 1991);
+let r= g.es_mayor(&d);
+assert_eq!(r, true);
+}
+
+
+
+#[test]
+fn prueba_es_biciesto(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_biciesto (&self) -> bool {
+let output:bool;
+if self.año == 2024 || self.año == 2020 || self.año == 2016 || self.año == 2012 || self.año == 2008 || 
+self.año == 2004 || self.año == 2000 || self.año == 1996 || self.año == 1992 || 
+self.año == 1988 || self.año == 1986 {output = true}
+else 
+{output = false}; 
+output 
+}
+}
+let p:Fecha=Fecha::new(5, 8, 1991);
+let r:bool= p.es_biciesto();
+assert_eq!(r, false);
+}
+#[test]
+fn prueba_es_fecha_valida(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12 
+&& self.año >=1984 && self.año <= 2026 {output = true} 
+else { output = false}; 
+output
+}
+}
+let d:Fecha= Fecha::new(2, 6, 1990);
+let r= d.es_fecha_valida();
+assert_eq!(r, true);
+}
+#[test]
+fn prueba_es_mayor(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_mayor (&self, f:&Fecha) -> bool {
+let output:bool;
+if (f.año < self.año ) || (f.año == self.año && f.mes < self.mes) || 
+(f.año == self.año && f.mes == self.mes && f.dia < self.dia) {output = true}
+else 
+{ output = false}; 
+output
+}
+}
+let d:Fecha= Fecha::new(2, 6, 1990);
+let g:Fecha=Fecha::new(5, 8, 1991);
+let r= g.es_mayor(&d);
+assert_eq!(r, true);
+}
+
+
+#[test]
+fn sumar_dias(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn sumar_dias (&mut self, dias:u32) {
+self.dia= self.dia + dias;
+}
+}
+
+let mut d:Fecha= Fecha::new(10, 6, 1990);
+d.sumar_dias(5);
+let r= d.dia;
+assert_eq!(r, 15);
+}
+
+#[test]
+fn restar_dias(){
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+
+fn restar_dias (&mut self, dias:u32) {
+self.dia= self.dia - dias;
+}
+}
+
+let mut d:Fecha= Fecha::new(2, 6, 1990);
+d.restar_dias(1);
+assert_eq!(d.dia, 1);
+}
+
+/* 4- Escribir un programa que defina la estructura Triángulo que tenga campos para las
+longitudes de sus tres lados. Para dicha estructura implemente los siguientes métodos:
+➢​ new: que pasando los parámetros correspondientes, crea un Triángulo y lo retorna.
+➢​ determinar_tipo: retorna el tipo del triángulo, los tipos pueden ser equilátero,
+isósceles o escaleno.
+➢​ calcular_area: calcular el área y la retorna.
+➢​ calcular_perimetro: calcula el perímetro y lo retorna. */
+
+fn main () {
+
+struct Triangulo {
+lado1: f64,
+lado2: f64,
+lado3: f64,
+}
+
+impl Triangulo {
+fn new (lado1: f64, lado2: f64, lado3: f64) -> Triangulo{
+Triangulo {lado1, lado2, lado3}
+}
+
+fn determinar_tipo (&self) -> String {
+a= "equilátero".to_string;
+b= "isósceles".to_string ;
+c= "escaleno".to_string;
+if self.lado1 ==self.lado2 && self.lado2==self.lado3 { return a }
+else if self.lado1 != self.lado2 && self.lado1 != self.lado3 && self.lado2 != self.lado3 { return c }
+else { return b }
+}
+
+fn calcular_area (base:f64, altura:f64) -> f64 {
+rst= (base*altura)/2;
+rst
+} 
+
+fn calcular_perimetro (&self) -> f64 {
+rst= self.lado1 + self.lado2 + self.lado3;
+rst
+
+}
+
+} 
+
+}
+* 5- Escribir un programa que defina una estructura Producto que tenga campos para el
+nombre, el precio bruto y un número identificatorio. Para dicha estructura implemente los
+siguientes métodos:
+➢​ new: que pasando los parámetros correspondientes, crea un Producto y lo retorna.
+➢​ calcular_impuestos(porcentaje_de_impuestos): retorna el valor de impuestos sobre
+el precio bruto
+➢​ aplicar_descuento(porcentaje_de_descuento): retorna el valor del porcentaje de
+descuento sobre el precio bruto
+➢​ calcular_precio_total(porcentaje_de_impuestos, porcentaje_descuento): retorna el
+precio total a pagar aplicando impuesto y descuento. 
+Tenga en cuenta que los parámetros son opcionales. */
+
+fn main () {
+
+struct Producto {
+nombre: String,
+precio_bruto: f64,
+codigo: u32,
+}
+impl Producto {
+fn new (nombre: String, precio_bruto: f64, codigo: u32) -> Producto{
+Producto {nombre, precio_bruto, codigo}
+}
+
+fn calcular_impuestos (&self, impuestos:Option<f64>) -> f64 {
+let mut rst: f64 = 0.0;
+if let Some (valor) = impuestos {(rst= valor * self.precio_bruto) / 100;}; 
+rst 
+}
+fn aplicar_descuento(&self, descuento:Option<f64>)-> f64 {
+let mut rst: f64 = 0.0;
+if let Some (valor) = descuento {(rst = valor * self.precio_bruto) / 100;}; 
+rst 
+}
+
+}
+
+fn calcular_precio_total(descuento:Option<f64>, impuestos:Option<f64>) -> f64{
+let mut rst: f64 ;
+rst = self.precio_bruto - aplicar_descuento (descuento) + calcular_impuestos (impuesto);
+rst
+}
+}
+6- Escribir un programa que defina una estructura Estudiante que tenga campos para el
+nombre, el número de identificación y las calificaciones de exámenes. 
+De cada Examen se
+conoce el nombre de la materia y la nota. 
+Para dichas estructuras implemente los siguientes
+métodos:
+❖​ Examen:
+➢​ new: que pasando los parámetros correspondientes, crea un Examen y lo
+retorna.
+❖​ Estudiante:
+➢​ new: que pasando los parámetros correspondientes, crea un Estudiante y lo
+retorna.
+➢​ obtener_promedio: retorna el promedio de las notas.
+➢​ obtener_calificacion_mas_alta: retorna la nota más alta.
+➢​ obtener_calificacion_mas_baja: retorna la nota más baja. */
+fn main () {
+
+struct Examen {
+nombre_materia: String,
+nota: u32,
+}
+
+impl Examen {
+fn new ( nombre_materia: String, nota: u32) -> Examen{
+Examen {nombre_materia, nota}
+}
+}
+
+struct Estudiante {
+nombre: String,
+calificaciones: Vec <Examen>,
+codigo: u32,
+}
+impl Estudiante {
+fn new (nombre: String, calificaciones: Vec <Examen>, codigo: u32) -> Estudiante{
+Estudiante {nombre, calificaciones, codigo}
+}
+fn obtener_promedio (&self) -> f64 {
+let mut notas=0; 
+let rst;
+for i in 0..self.calificaciones.len()-1 {
+notas += self.calificaciones[i].nota 
+};
+rst = notas as f64 / (self.calificaciones.len() as f64);
+rst
+}
+fn obtener_calificacion_mas_alta (&self) -> u32 {
+let mut rst = 0;
+
+for i in 0..self.calificaciones.len() -1 {
+if self.calificaciones[i].nota > rst { rst = self.calificaciones[i].nota }
+}
+rst
+}
+fn obtener_calificacion_mas_baja (&self) -> u32 {
+let mut rst = 999999;
+for i in 0..self.calificaciones.len() -1 {
+if self.calificaciones[i].nota < rst { rst= self.calificaciones[i].nota }
+}
+rst as u32
+}
+}
+}
+
+​ ConcesionarioAuto:
+➢​ new: que pasando los parámetros correspondientes, crea un
+ConcesionarioAuto y lo retorna.
+➢​ agregar_auto(auto): agrega un auto a la lista de autos que tiene sin superar
+la máxima cantidad para albergarlos y retorna true, en caso de que lo supere
+no lo agrega y retorna false.
+➢​ eliminar_auto(auto): elimina un auto de la lista de autos.
+➢​ buscar_auto(auto): busca un auto y si lo encuentra lo retorna.
+❖​ Auto:
+➢​ new: que pasando los parámetros correspondientes, crea un Auto y lo
+retorna.
+➢​ calcular_precio: retorna el precio del auto aplicando los siguientes criterios:
+■​ si es de color primario le aplica un recargo del 25%, sino le aplica un
+descuento del 10%.
+■​ si la marca es BMW le aplica un recargo del 15%-
+■​ si el año es menor a 2000 le aplica un descuento del 5%. */
+
+fn main () {
+#[derive(Debug)]
+struct ConcesionarioAuto {
+nombre: String,
+direccion: String,
+capacidad: u32,
+autos : Vec <Auto>
+}
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Auto {
+marca: String,
+modelo: String,
+año: u32,
+precio_bruto: f64,
+color: String
+}
+
+
+//struct Color: (String,String,String,String,String,String)= ("rojo".to_string(), "verde".to_string(), "azul".to_string(), "amarillo".to_string(), "blanco".to_string(), "negro".to_string());
+
+impl ConcesionarioAuto {
+fn new (nombre: String, direccion: String, capacidad: u32, autos : Vec<Auto>) -> ConcesionarioAuto{
+ConcesionarioAuto {nombre, direccion, capacidad, autos}
+}
+
+fn agregar_auto (&mut self, auto: Auto) -> bool{
+let rst:bool;
+if self.autos.len() < self.capacidad as usize{
+self.autos.push (auto) ; rst =true 
+}
+// o tmb { self.autos.extend (auto) ; rst =true }
+else {rst = false};
+rst 
+}
+
+fn eliminar_auto (&mut self, auto: Auto) -> bool {
+let mut rst=false;
+for i in 0..self.autos.len() -1 {
+if self.autos[i] == auto {self.autos.remove(i) ; rst= true;
+break;} 
+} 
+rst
+} 
+
+fn buscar_auto(&self, auto: Auto) -> Option <&Auto>{
+let mut rst: Option <&Auto> = None;
+
+for i in &self.autos{
+if *i == auto {rst = Some (&i);
+break} 
+}
+rst
+}
+
+}
+
+//......................................
+
+impl Auto {
+
+fn new (marca: String, modelo: String, año: u32, precio_bruto: f64, color:String) -> Auto{
+Auto {marca, modelo, año, precio_bruto, color}
+}
+
+//retorna el precio del auto aplicando los siguientes criterios:
+//​ si es de color primario le aplica un recargo del 25%, sino le aplica un
+//descuento del 10%.
+//■​ si la marca es BMW le aplica un recargo del 15%-
+//■​ si el año es menor a 2000 le aplica un descuento del 5%. */
+
+fn calcular_precio (&self) -> f64 {
+
+let mut rst:f64=self.precio_bruto;
+
+if self.color == "rojo" ||self.color == "azul" ||self.color == "amarillo" { 
+rst += (25.0 * self.precio_bruto) / 100.0}
+else { 
+rst -= (10.0 * self.precio_bruto) / 100.0};
+
+if self.marca == "BMW" { 
+rst += (15.0 * self.precio_bruto) / 100.0 };
+if self.año < 2000 { 
+rst -= (5.0 * self.precio_bruto) / 100.0 };
+
+rst
+}
+
+}
+
+
+}
+
+#[test]
+
+fn prueba_buscar_auto (){
+#[derive(Debug)]
+struct ConcesionarioAuto {
+nombre: String,
+direccion: String,
+capacidad: u32,
+autos : Vec <Auto>
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Auto {
+marca: String,
+modelo: String,
+año: u32,
+precio_bruto: f64,
+color: String
+}
+
+impl ConcesionarioAuto {
+fn new (nombre: String, direccion: String, capacidad: u32, autos : Vec<Auto>) -> ConcesionarioAuto{
+ConcesionarioAuto {nombre, direccion, capacidad, autos}
+}
+
+fn agregar_auto (&mut self, auto: Auto) -> bool{
+let rst:bool;
+if self.autos.len() < self.capacidad as usize{
+self.autos.push (auto) ; rst =true 
+}
+// o tmb { self.autos.extend (auto) ; rst =true }
+else {rst = false};
+rst 
+}
+
+fn buscar_auto(&self, auto: Auto) -> Option <&Auto>{
+let mut rst: Option <&Auto> = None;
+
+for i in &self.autos{
+if *i == auto {rst = Some (&i);
+break} 
+}
+rst
+}
+}
+
+impl Auto {
+
+fn new (marca: String, modelo: String, año: u32, precio_bruto: f64, color:String) -> Auto{
+Auto {marca, modelo, año, precio_bruto, color}
+}
+}
+
+let autito: Auto=Auto::new("ford".to_string(),"ret".to_string(), 2009, 56433.5,"rojo".to_string());
+let autito2: Auto=Auto::new("ford".to_string(),"ret".to_string(), 2089, 56433.5,"rojo".to_string());
+
+let mut vector=Vec::<Auto>::new();
+let mut con = ConcesionarioAuto::new("pedro".to_string(),"alapeoeoe".to_string(), 32, vector);
+
+con.agregar_auto(autito);
+let v= con.buscar_auto(autito2);
+
+assert_eq!(v, None);
+
+}
+
+8- Defina la estructura Cancion con campos para el título, el artista y el género.
+El género
+puede ser rock, pop, rap, jazz, otros. Luego modele una playlist.
+La playlist está compuesta
+por una lista de canciones y un nombre, y se permiten hacer las 
+siguientes acciones sobre
+ella:
+➔​ agregar canción.
+➔​ eliminar canción.
+➔​ mover canción // mueve la canción a una determinada posición de la playlist.
+➔​ buscar canción por nombre.
+➔​ obtener las canciones de un determinado género.
+➔​ obtener las canciones de un determinado artista.
+➔​ modificar título de la playlist.
+➔​ eliminar todas las canciones */
+
+fn main () {
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Cancion {
+título: String,
+artista: String,
+género: String,
+}
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Playlist {
+lista: Vec <Cancion>,
+nombre: String
+}
+impl Cancion {
+fn new (título: String,artista: String, género: String) -> Cancion{
+Cancion {título,artista, género}
+}
+}
+impl Playlist {
+fn new (lista: Vec <Cancion>, nombre: String) -> Playlist{
+Playlist {lista, nombre}
+}
+fn agregar_canción (&mut self, cancion: Cancion) {
+self.lista.push(cancion); // o self.lista.extend(cancion);
+}
+fn eliminar_ultima_canción_agregada (&mut self) -> bool {
+
+let mut rst :bool =false;
+if let Some(valor)= self.lista.pop() { rst=true }
+// o self.lista.remove(self.lista.len()-1) ;
+rst
+}
+
+fn buscar_canción_por_nombre (&self, nom_cancion: String) -> Option<&Cancion>{
+
+let mut rst: Option<&Cancion>=None;
+for i in 0..self.lista.len()-1 { 
+// o hago for valor in self.lista; y creo un contador i que aumente en cada vuelta
+if self.lista[i].título == nom_cancion { 
+rst = Some(&self.lista[i]); break}; }
+rst 
+}
+
+fn buscar_indice (&self, cancion:Cancion)-> Option<usize> {
+let mut rst:Option<usize> = None;
+for i in 0..self.lista.len()-1 { 
+
+if self.lista[i] == cancion { 
+rst = Some(i); break;}
+} 
+
+rst
+}
+
+fn eliminar_canción2 (&mut self, cancion: Cancion) {
+let max= self.lista.len();
+if let Some (posicion) = self.buscar_indice(cancion) {
+if posicion < max {
+self.lista.remove(posicion);}
+}
+}
+
+fn mover_canción (&mut self, cancion:Cancion, pos2:u32) {
+
+let max= self.lista.len();
+let pos1= self.buscar_indice(cancion); 
+
+if (pos2 as usize) < max && pos1 != None {let pos= pos1.unwrap() ; 
+self.lista.swap(pos, pos2 as usize); 
+}
+}
+fn buscar_canción_por_artista (&self, nom_artista: String) -> Option<&Cancion>{
+
+let mut rst: Option<&Cancion>=None;
+
+for i in 0..self.lista.len()-1{ 
+if self.lista[i].artista == nom_artista { 
+rst = Some(&self.lista[i]); break;} 
+}
+rst
+}
+fn modificar_título_de_la_playlist(&mut self, nom_titulo:String) {
+self.nombre = nom_titulo
+} 
+fn eliminar_todas_las_canciones(&mut self) {
+
+self.lista.clear();
+}
+}
+}
+* 9.-Dada una cadena de veterinarias se desea implementar un sistema de atención de
+pacientes para cada veterinaria, de la veterinaria se conoce el nombre, la dirección y un id.
+Para la atención de mascotas se requiere administrar una cola de atención. De la mascota
+se conoce el nombre, la edad, el tipo de animal(perro, gato, caballo, otros) y su dueño. Del
+dueño se conoce el nombre, la dirección y un teléfono de contacto. Luego de la atención se
+desea tener un registro de las atenciones realizadas guardando los datos de la mascota, el
+diagnóstico final, tratamiento y fecha de la próxima visita si es que se requiere.
+Dado todo lo mencionado anteriormente implemente los métodos para realizar las
+siguientes acciones:
+➔​ crear una veterinaria.
+➔​ agregar una nueva mascota a la cola de atención de la veterinaria.
+➔​ agregar una nueva mascota a la cola de atención pero que sea la siguiente
+en atender porque tiene la máxima prioridad.
+➔​ atender la próxima mascota de la cola.
+➔​ eliminar una mascota específica de la cola de atención dado que se retira.
+➔​ registrar una atención.
+➔​ buscar una atención dado el nombre de la mascota, el nombre del dueño y el
+teléfono.
+➔​ modificar el diagnóstico de una determinada atención.
+➔​ modificar la fecha de la próxima visita de una determinada atención.
+➔​ eliminar una determinada atención.
+Nota: para la fecha utilice lo implementado en el punto 3. */
+
+/* 9.-Dada una cadena de veterinarias se desea implementar un sistema de atención de
+pacientes para cada veterinaria, de la veterinaria se conoce el nombre, la dirección y
+un id.
+Para la atención de mascotas se requiere administrar una cola de atención. De la mascota
+se conoce el nombre, la edad, el tipo de animal(perro, gato, caballo, otros) y su dueño. 
+Del dueño se conoce el nombre, la dirección y un teléfono de contacto. 
+Luego de la atención se
+desea tener un registro de las atenciones realizadas guardando los datos de la mascota,
+el
+diagnóstico final, tratamiento y fecha de la próxima visita si es que se requiere.
+Dado todo lo mencionado anteriormente implemente los métodos para realizar las
+siguientes acciones:
+➔​ crear una veterinaria.
+➔​ agregar una nueva mascota a la cola de atención de la veterinaria.
+➔​ agregar una nueva mascota a la cola de atención pero que sea la siguiente
+en atender porque tiene la máxima prioridad.
+➔​ atender la próxima mascota de la cola.
+➔​ eliminar una mascota específica de la cola de atención dado que se retira.
+➔​ registrar una atención.
+➔​ buscar una atención dado el nombre de la mascota, el nombre del dueño y el
+teléfono.
+➔​ modificar el diagnóstico de una determinada atención.
+➔​ modificar la fecha de la próxima visita de una determinada atención.
+➔​ eliminar una determinada atención.
+Nota: para la fecha utilice lo implementado en el punto 3. */
+
+use std::{collections::VecDeque, fmt::Error};
+
+fn main () {
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Veterinaria {
+nombre: String,
+dirección: String,
+id: String,
+turnos: VecDeque <Mascota>,
+registros: Vec<RegistroAtención>
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Mascota {
+nombre: String,
+edad: String,
+tipo: String,
+dueño: Dueño,
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Dueño {
+nombre: String,
+dirección: String,
+teléfono: u32,
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct RegistroAtención {
+mascota: Mascota,
+diagnóstico: String,
+tratamiento: String,
+fecha_sig_consulta:Fecha
+} 
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+
+// tipos...................................
+
+impl Mascota {
+fn new ( nombre: String, edad: String, tipo: String, dueño: Dueño) -> Mascota{
+Mascota {nombre, edad, tipo, dueño}
+} 
+
+} 
+//...................................RegistroAtención
+
+impl RegistroAtención {
+fn new (mascota:Mascota, diagnóstico: String,tratamiento: String,fecha_sig_consulta:Fecha) 
+-> RegistroAtención{
+RegistroAtención {mascota, diagnóstico,tratamiento,fecha_sig_consulta}
+} 
+} 
+//......................................Fecha
+
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12 
+&& self.año >=1970 && self.año <= 2025 {output = true} 
+else { output = false}; 
+output
+} 
+} 
+//..........................Dueño
+
+impl Dueño {
+fn new (nombre: String, dirección: String,teléfono: u32) 
+-> Dueño{
+Dueño {nombre, dirección,teléfono}
+} 
+} 
+
+//.................................Veterinaria
+impl Veterinaria {
+//➔​ crear una veterinaria. 
+fn new (nombre: String, dirección: String,id: String, turnos: VecDeque <Mascota>, 
+registros: Vec<RegistroAtención>) -> Veterinaria{
+Veterinaria {nombre, dirección,id, turnos, registros}
+} 
+
+//➔​ agregar una nueva mascota a la cola de atención de la veterinaria.
+
+fn agregar_turno (&mut self, mascota:Mascota) {
+self.turnos.push_back(mascota)
+}
+
+//➔​ agregar una nueva mascota a la cola de atención pero que sea la siguiente
+//en atender porque tiene la máxima prioridad.
+
+fn agregar_turno_prioritario (&mut self, mascota:Mascota) {
+self.turnos.push_front(mascota)
+}
+
+//➔​ atender la próxima mascota de la cola.
+
+fn tomar_turno (&mut self) -> Option<Mascota> {
+let rst;
+if let Some (valor)= self.turnos.pop_front(){
+rst = Some(valor)}
+else {
+rst=None
+}
+rst
+}
+
+//➔​ eliminar una mascota específica de la cola de atención dado que se retira.
+
+fn eliminar_turno (&mut self, mascota:Mascota) {
+for i in 0..self.turnos.len() -1 { 
+if self.turnos[i] == mascota
+{ self.turnos.remove(i); break}
+}
+}
+
+//➔​ registrar una atención.
+
+fn registro_atencion (&mut self, registro:RegistroAtención) {
+self.registros.push(registro);
+}
+
+//➔​ buscar una atención dado el nombre de la mascota, el nombre del dueño y el teléfono.
+
+fn buscar_registro (&self, nombre_masc: String, nombre_dueño:String, teléfono:u32) -> Option <&RegistroAtención>{
+let mut rst: Option <&RegistroAtención>=None;
+
+for i in 0..self.registros.len() -1 { 
+if self.registros[i].mascota.dueño.nombre == nombre_dueño &&
+self.registros[i].mascota.nombre == nombre_masc &&
+self.registros[i].mascota.dueño.teléfono == teléfono
+{ rst= Some(&self.registros[i]); break}
+}
+rst
+}
+
+//➔​ modificar el diagnóstico de una determinada atención.
+
+fn modificar_diagnostico (&mut self, atencion:RegistroAtención, nuevo_diag:String) {
+for i in 0..self.registros.len() -1 { 
+if self.registros[i] == atencion
+{ self.registros[i].diagnóstico=nuevo_diag ; break}
+}
+}
+
+//➔​ modificar la fecha de la próxima visita de una determinada atención.
+
+fn modificar_fecha (&mut self, atencion:RegistroAtención, nueva_fecha:Fecha) {
+for i in 0..self.registros.len() -1 { 
+if self.registros[i] == atencion
+{ self.registros[i].fecha_sig_consulta=nueva_fecha ; break}
+}
+}
+
+//➔​ eliminar una determinada atención.
+
+fn eliminar_atencion (&mut self, atencion:RegistroAtención) -> bool{
+let mut rst: bool=false;
+
+for i in 0..self.registros.len() -1 { 
+if self.registros[i] == atencion
+{ self.registros.remove(i) ; rst= true; break}
+}
+
+rst
+}
+
+}
+
+}
+
+10-Para una biblioteca se desea implementar un sistema de préstamos de libros. De la
+biblioteca se conoce el nombre y la dirección, las copias de los libros a disposición para
+prestar y los préstamos efectuados. Los libros a disposición es un registro donde se indica
+la cantidad de ejemplares que tiene a disposición para prestar de determinado libro. De
+cada libro se conoce el isbn, el título, autor, número de páginas, género(novela, infantil,
+técnico, otros). Para registrar un préstamo se requiere el libro, el cliente, la fecha de
+vencimiento del préstamo, la fecha de devolución y el estado que puede ser devuelto o en
+préstamo. Del cliente se conoce el nombre, teléfono y dirección de correo electrónico.
+Implemente los métodos necesarios para realizar las siguientes acciones:
+➔​ obtener cantidad de copias: dado un determinado libro retorna la cantidad de
+copias a disposición que hay para prestar de dicho libro.
+➔​ decrementar cantidad de copias a disposición; dado un libro decrementa en 1
+la cantidad de copias de libros a disposición para prestar.
+➔​ incrementar cantidad de copias a disposición: dado un libro incrementa en 1
+la cantidad de copias del libro a disposición para ser prestado.
+➔​ contar préstamos de un cliente: devuelve la cantidad de préstamos en estado
+“en préstamo” de un determinado cliente.
+➔​ realizar un préstamo de un libro para un cliente: crea un préstamo de un libro
+para un determinado cliente cumpliendo con lo siguiente
+◆​ el cliente no tenga más de 5 préstamos en el estado “en préstamo”
+◆​ haya al menos una copia disponible en el registro de copias a
+disposición.
+De ser así descuenta 1 en el registro de “copias a disposición” y
+retorna true, si no cumple con alguna de las condiciones retorna false.
+➔​ ver préstamos a vencer el los próximos días: retorna una lista de préstamos a
+vencer el los próximos días, el valor de días es pasado por parámetro.
+➔​ ver los préstamos vencidos: retorna una lista de préstamos en el estado “en
+préstamos” donde la fecha de vencimiento es menor a la fecha actual.
+➔​ buscar préstamo: dado un libro y un cliente busca un préstamo y lo retorna si
+existe.
+➔​ devolver libro: dado un libro y un cliente se busca el préstamo y se cambia al
+estado “devuelto”, se registra la fecha de devolución y se incrementa la
+cantidad de libros en 1 del libro devuelto en el registro de copias a
+disposición.
+Nota: para la fecha utilice lo implementado en el punto 3.
+*//* 10-Para una biblioteca se desea implementar un sistema de préstamos de libros. De la
+biblioteca se conoce el nombre y la dirección, las copias de los libros a disposición para
+prestar y los préstamos efectuados.
+Los libros a disposición es un registro donde se indica
+la cantidad de ejemplares que tiene a disposición para prestar de determinado libro. De
+cada libro se conoce el isbn, el título, autor, número de páginas, género(novela, infantil,
+técnico, otros). 
+Para registrar un préstamo se requiere el libro, el cliente, la fecha de
+vencimiento del préstamo, la fecha de devolución y el estado que puede ser devuelto o en
+préstamo. Del cliente se conoce el nombre, teléfono y dirección de correo electrónico.
+
+Implemente los métodos necesarios para realizar las siguientes acciones:
+➔​ obtener cantidad de copias: dado un determinado libro retorna la cantidad de
+copias a disposición que hay para prestar de dicho libro.
+➔​ decrementar cantidad de copias a disposición; dado un libro decrementa en 1
+la cantidad de copias de libros a disposición para prestar.
+➔​ incrementar cantidad de copias a disposición: dado un libro incrementa en 1
+la cantidad de copias del libro a disposición para ser prestado.
+➔​ contar préstamos de un cliente: devuelve la cantidad de préstamos en estado
+“en préstamo” de un determinado cliente.
+➔​ realizar un préstamo de un libro para un cliente: crea un préstamo de un libro
+para un determinado cliente cumpliendo con lo siguiente
+◆​ el cliente no tenga más de 5 préstamos en el estado “en préstamo”
+◆​ haya al menos una copia disponible en el registro de copias a
+disposición.
+De ser así descuenta 1 en el registro de “copias a disposición” y
+retorna true, si no cumple con alguna de las condiciones retorna false.
+➔​ ver préstamos a vencer el los próximos días: retorna una lista de préstamos a
+vencer el los próximos días, el valor de días es pasado por parámetro.
+➔​ ver los préstamos vencidos: retorna una lista de préstamos en el estado “en
+préstamos” donde la fecha de vencimiento es menor a la fecha actual.
+➔​ buscar préstamo: dado un libro y un cliente busca un préstamo y lo retorna si
+existe.
+➔​ devolver libro: dado un libro y un cliente se busca el préstamo y se cambia al
+estado “devuelto”, se registra la fecha de devolución y se incrementa la
+cantidad de libros en 1 del libro devuelto en el registro de copias a
+disposición.
+Nota: para la fecha utilice lo implementado en el punto 3.
+*/
+
+use std::{collections::VecDeque, fmt::Error, vec};
+use chrono::{DateTime, Local};
+
+fn main () {
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Biblioteca {
+nombre:String,
+dirección: String,
+copias_libros: Vec<Cantidad>,
+prestamos_efectuados: Vec<Prestamo>,
+} 
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Cantidad {
+libro:Libro,
+cantidad_disponible:u32,
+cantidad_total:u32
+}
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Libro {
+título:String,
+autor: String,
+género: String,
+numero_paginas:u32 ,
+isbn: String
+}
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Prestamo {
+libro:Libro,
+fecha_vencimiento: Fecha,
+fecha_devolucion: Fecha,
+numero_paginas:u32,
+estado: String,
+cliente:Cliente
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Cliente {
+nombre:String,
+telefono:u32,
+direccion_correo:String
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Fecha {
+dia: u32 ,
+mes: u32,
+año: u32
+}
+
+// tipos...................................Prestamo
+
+impl Prestamo {
+fn new (libro:Libro, fecha_vencimiento: Fecha, fecha_devolucion: Fecha, numero_paginas:u32,
+estado: String, cliente:Cliente) -> Prestamo{
+Prestamo {libro, fecha_vencimiento, fecha_devolucion, numero_paginas,
+estado, cliente}
+} } 
+
+
+impl Fecha {
+fn new (dia:u32, mes:u32, año:u32) -> Fecha{
+Fecha {dia, mes, año}
+}
+fn es_fecha_valida (&self) -> bool {
+let output:bool;
+if self.dia >=1 && self.dia <= 31 && self.mes >=1 && self.mes <= 12 
+&& self.año >=1970 && self.año <= 2025 {output = true} 
+else { output = false}; 
+output
+} 
+} 
+
+// tipos...................................Libro
+
+impl Libro {
+fn new (título:String, autor: String,género: String,numero_paginas:u32 , isbn: String) -> Libro{
+Libro {título, autor, género, numero_paginas, isbn}
+} } 
+
+// tipos...................................Cliente
+impl Cliente {
+fn new (nombre:String, telefono:u32, direccion_correo:String) -> Cliente{
+Cliente {nombre, telefono, direccion_correo}
+} 
+} 
+
+// tipos...................................Cantidad
+
+impl Cantidad {
+fn new (libro:Libro,cantidad_disponible:u32, cantidad_total:u32) -> Cantidad{
+Cantidad {libro,cantidad_disponible, cantidad_total}
+} } 
+
+
+// tipos...................................Biblioteca
+
+impl Biblioteca {
+fn new ( nombre:String, dirección: String, copias_libros: Vec<Cantidad>, 
+prestamos_efectuados: Vec<Prestamo>) -> Biblioteca{
+Biblioteca {nombre, dirección, copias_libros, 
+prestamos_efectuados}
+} 
+//...................................
+
+//➔​ obtener cantidad de copias: dado un determinado libro retorna la cantidad de
+//copias a disposición que hay para prestar de dicho libro.
+
+fn obtener_copias (&self, libro:Libro) -> Option<u32>{
+let mut rst :Option<u32> = None;
+for i in 0..self.copias_libros.len() -1 { 
+if self.copias_libros[i].libro == libro
+{rst = Some(self.copias_libros[i].cantidad_disponible); break;}
+}
+rst
+}
+
+//➔​ decrementar cantidad de copias a disposición; dado un libro decrementa en 1
+//la cantidad de copias de libros a disposición para prestar.
+
+fn decrementar_copias (&mut self, libro:Libro) {
+
+for i in 0..self.copias_libros.len() -1 { 
+if self.copias_libros[i].libro == libro
+{self.copias_libros[i].cantidad_disponible=self.copias_libros[i].cantidad_disponible -1; break;}
+}
+}
+
+//➔​ incrementar cantidad de copias a disposición: dado un libro incrementa en 1
+//la cantidad de copias del libro a disposición para ser prestado.
+
+fn incrementar_copias (&mut self, libro:Libro) {
+
+for i in 0..self.copias_libros.len() -1 { 
+if self.copias_libros[i].libro == libro
+{self.copias_libros[i].cantidad_disponible=self.copias_libros[i].cantidad_disponible + 1; break;}
+}
+}
+
+//➔​ contar préstamos de un cliente: devuelve la cantidad de préstamos en estado
+//“en préstamo” de un determinado cliente.
+
+fn contar_prestamos_clientes (&self, cliente:Cliente) -> u32{
+
+let mut c= 0;
+for i in 0..self.prestamos_efectuados.len() -1 { 
+if self.prestamos_efectuados[i].cliente == cliente && self.prestamos_efectuados[i].estado == "en préstamo"
+{c += 1}
+}
+c
+}
+
+//➔​ realizar un préstamo de un libro para un cliente: crea un préstamo de un libro
+//para un determinado cliente cumpliendo con lo siguiente 
+//◆​ el cliente no tenga más de 5 préstamos en el estado “en préstamo”
+//◆​ haya al menos una copia disponible en el registro de copias a
+//disposición.
+//De ser así descuenta 1 en el registro de “copias a disposición” y
+//retorna true, si no cumple con alguna de las condiciones retorna false.
+
+
+fn realizar_prestamo (&mut self, libro:Libro, cliente:Cliente) -> bool {
+
+let mut rst=false;
+if self.contar_prestamos_clientes(cliente) < 5 && self.obtener_copias(libro) > 0
+{ self.decrementar_copias(libro) ;rst =true };
+
+rst
+
+} 
+
+//➔​ ver préstamos a vencer el los próximos días: retorna una lista de préstamos a
+//vencer el los próximos días, el valor de días es pasado por parámetro.
+
+
+fn prestamos_a_vencer (&self, dia_a_vencer:u32) -> Vec<&Prestamo> {
+
+let mut vector:Vec<&Prestamo> = vec![];
+for i in 0..self.prestamos_efectuados.len() -1 { 
+if self.prestamos_efectuados[i].estado == "en préstamo" && 
+self.prestamos_efectuados[i].fecha_vencimiento.dia <= dia_a_vencer
+{vector.push(&self.prestamos_efectuados[i]);}
+}
+vector
+
+} 
+
+
+//➔​ ver los préstamos vencidos: retorna una lista de préstamos en el estado “en
+//préstamos” donde la fecha de vencimiento es menor a la fecha actual.
+
+fn prestamos_vencidos (&self) -> Vec<&Prestamo> {
+
+let dt= Local::now();
+let ver=dt.offset().clone();
+
+let mut vector:Vec<&Prestamo> = vec![];
+for i in 0..self.prestamos_efectuados.len() -1 { 
+if self.prestamos_efectuados[i].estado == "en préstamo" && 
+self.prestamos_efectuados[i].fecha_vencimiento.dia <= dia_a_vencer
+{vector.push(&self.prestamos_efectuados[i]);}
+}
+vector
+
+} 
+
+//➔​ buscar préstamo: dado un libro y un cliente busca un préstamo y lo retorna si
+//existe.
+
+
+fn buscar_prestamo (&self, libro:Libro, cliente:Cliente) -> Option<&Prestamo> {
+
+let mut rst:Option<&Prestamo> =None;
+
+for i in 0..self.prestamos_efectuados.len() -1 { 
+if self.prestamos_efectuados[i].libro == libro && 
+self.prestamos_efectuados[i].cliente == cliente
+{rst =Some(&self.prestamos_efectuados[i]) };
+}
+
+rst
+
+} 
+
+//➔​ devolver libro: dado un libro y un cliente se busca el préstamo y se cambia al
+//estado “devuelto”, se registra la fecha de devolución y se incrementa la
+//cantidad de libros en 1 del libro devuelto en el registro de copias a
+//disposición.
+
+fn devolver_libro (&mut self, libro:Libro, cliente:Cliente, fecha:Fecha) -> bool {
+
+let mut rst=false;
+if let Some (elemento) = self.buscar_prestamo(libro, cliente) 
+{elemento.estado="devuelto".to_string(); elemento.fecha_devolucion = fecha; 
+self.incrementar_copias(libro);rst=true}
+
+rst
+}
+
+} 
+
+
+} 
+
+
+
+15,
+
+
+fn main () {
+//moto
+let marca: String = "Random".to_string();
+let modelo: i32 = 2004;
+let precio_bruto: f64 = 506_654.93;
+let impuesto: Option<f64> = Some(309.0);
+let moto1: Moto=Moto::new (marca,modelo,precio_bruto) ;
+let cantidad= 7;
+let precio_final: f64= moto1.calcular_precio_final(impuesto);
+let mut venta1:Venta<Moto>=Venta::new(moto1, cantidad, precio_final, None);
+let dato = venta1.precio_venta();
+// auto
+let marca: String = "Fiat".to_string();
+let modelo: i32 = 2009;
+let precio_bruto: f64 = 5_006_654.93;
+let cantidad= 3;
+let impuesto: Option<f64> = Some(1_492.0);
+let bol=true;
+let mut auto1: Auto=Auto::new (marca,modelo,precio_bruto,bol) ;
+let precio_final: f64= auto1.calcular_precio_final(impuesto);
+let mut venta2:Venta<Auto>=Venta::new(auto1, cantidad, precio_final, None);
+let dato2 = venta2.precio_venta();
+//
+let mut mis_ventas =Vec::new();
+mis_ventas.push(VentaVehiculo::VentaMoto(venta1));
+mis_ventas.push(VentaVehiculo::VentaAuto(venta2));
+for i in mis_ventas {println!("{:#?}",i)};
+}
+#[derive(Debug)]
+struct Moto {
+marca:String,
+modelo:i32,
+precio_bruto:f64,
+}
+impl Moto {
+fn new (marca:String, modelo:i32, precio_bruto:f64) -> Moto {
+Moto{marca,modelo,precio_bruto}
+}
+fn calcular_precio_final (&self, impuestos:Option<f64>) -> f64 {
+let mut precio: f64 = self.precio_bruto;
+if let Some (valor) = impuestos {precio+= valor}; 
+precio
+}
+}
+#[derive(Debug)] 
+struct Venta <T> {
+producto:T,
+cantidad:i32,
+precio_final_unidad:f64,
+precio_venta:Option<f64>
+}
+impl <T> Venta <T>{ 
+fn new (producto:T, cantidad:i32, precio_final_unidad:f64, precio_venta:Option<f64>) ->Venta <T>{ 
+Venta {producto,cantidad,precio_final_unidad,precio_venta}
+}
+fn precio_venta (&mut self) -> f64 {
+let precio: f64 = self.precio_final_unidad * self.cantidad as f64;
+self.precio_venta = Some(precio);
+precio
+}
+}
+#[derive(Debug)]
+struct Auto {
+marca:String,
+modelo:i32,
+precio_bruto:f64,
+es_importado:bool
+}
+impl Auto {
+fn new (marca:String, modelo:i32, precio_bruto:f64,es_importado:bool) -> Auto {
+Auto {marca,modelo,precio_bruto,es_importado}
+}
+fn calcular_precio_final (&mut self, impuestos:Option<f64>) -> f64 {
+let mut precio: f64 = self.precio_bruto;
+if self.es_importado {precio= precio *1.3};
+if let Some (valor) = impuestos {precio+= valor}; 
+self.precio_bruto= precio;
+precio
+}
+}
+#[derive(Debug)]
+enum VentaVehiculo {
+VentaAuto(Venta <Auto>) ,
+VentaMoto(Venta<Moto>)
+}
